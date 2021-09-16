@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node App.js",
-    "app": "nodemon App.js"
+    "app": "nodemon App.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run app\" \"npm run client\""
   },
   "author": "Ritesh Jangir",
   "license": "ISC",
@@ -18,6 +20,7 @@
     "mongoose": "^6.0.5"
   },
   "devDependencies": {
+    "concurrently": "^6.2.1",
     "nodemon": "^2.0.12"
   }
 }
