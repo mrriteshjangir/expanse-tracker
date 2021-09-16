@@ -1,0 +1,3 @@
+{
+    "mongoURI":"mongodb+srv://ritesh:mongo1234@expanse.hitgh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}
