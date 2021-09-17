@@ -1,9 +1,9 @@
 import React from 'react'
-
+import Navbar from '../components/Navbar'
 export default function Signin() {
     return (
-        <div>
-            <h1>I'm Signin</h1>
-        </div>
+        <>
+            <Navbar title="Sign In" />
+        </>
     )
 }
