@@ -12,7 +12,7 @@ export default function App() {
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/signin" component={Signin}/>
+                <Route path="/signin" component={Signin} />
                 <Route path="/dashboard" component={Dashboard} />
 
                 <Redirect to="/"  from="*"/>
