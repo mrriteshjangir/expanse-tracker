@@ -36,20 +36,68 @@ export default class Signup extends Component {
         errorList['nameErr']="Name could not be empty";
         fromIsValid=false;
       }
+      else
+      {
+          if(!/^[A-Za-z ]+$/.test(name)){
+            errorList['nameErr']="Wrong formate of name";
+            fromIsValid=false;
+          }
+      }
       if(!email)
       {
         errorList['emailErr']="Email could not be empty";
         fromIsValid=false;
+      }
+      else
+      {
+          if(!/^(([<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            errorList['emailErr']="Wrong formate of email";
+            fromIsValid=false;
+          }
       }
       if(!password)
       {
         errorList['passErr']="Password could not be empty";
         fromIsValid=false;
       }
+      else
+      {
+          if(!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{1,}$/.test(password)){
+            errorList['passErr']="Wrong formate of password";
+            fromIsValid=false;
+          }
+          if(password.length<6)
+          {
+            errorList['passErr']="Password length could not be less than 6";
+            fromIsValid=false;
+          }
+          else if(password.length>15)
+          {
+            errorList['passErr']="Password length could not be more than 15";
+            fromIsValid=false;
+          }
+      }
       if(!conf_pass)
       {
         errorList['conf_passErr']="Conf pass could not be empty";
         fromIsValid=false;
+      }
+      else
+      {
+          if(!/^([6-9]{1,})[0-9]{9,}$/.test(conf_pass)){
+            errorList['conf_passErr']="Wrong formate of mobile";
+            fromIsValid=false;
+          }
+          if(conf_pass.length<10)
+          {
+            errorList['conf_passErr']="mobile no could not be less than 10";
+            fromIsValid=false;
+          }
+          else if(conf_pass.length>10)
+          {
+            errorList['conf_passErr']="mobile no could not be more than 10";
+            fromIsValid=false;
+          }
       }
 
       this.setState({errorListG:errorList})
@@ -62,7 +110,7 @@ export default class Signup extends Component {
 
     if(this.handleValidation())
     {
-      alert("Form summited withou errors");
+      alert("Form summited without errors");
     }
     else
     {
@@ -137,9 +185,9 @@ export default class Signup extends Component {
             <div className="mb-3">
               <label className="form-label">Confirm Password</label>
               <input
-                type="password"
+                type="tel"
                 className="form-control"
-                placeholder="********"
+                placeholder="xxxxxxxxx"
                 name="conf_pass"
                 onChange={this.onChange}
               />
