@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import swal from 'sweetalert';
+import axios from 'axios';
+import md5 from 'md5';
+
+
 export default class Signup extends Component {
 
   constructor(){
@@ -22,15 +27,29 @@ export default class Signup extends Component {
   }
   onFileChange=(e)=>{
       this.setState({photo:e.target.files[0]});
+
+      if(e.target.files[0].size>1000000)
+      {
+        swal("File is too big!", "Upload files below or equal to 2mb");
+        e.target.value = null;
+        this.setState({photo:null});
+      }
   }
 
   handleValidation=(e)=>{
-      const{name,email,password,conf_pass}=this.state;
+      const{name,email,password,conf_pass,photo}=this.state;
 
       let errorList={};
 
       let fromIsValid=true;
 
+      if(!photo || photo===null)
+      {
+        errorList['picErr']="Photo could not be empty";
+        fromIsValid=false;
+      }
+     
+      
       if(!name)
       {
         errorList['nameErr']="Name could not be empty";
@@ -52,7 +71,7 @@ export default class Signup extends Component {
       {
           if(!/^(([<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             errorList['emailErr']="Wrong formate of email";
-            fromIsValid=false;
+            fromIsValid=true;
           }
       }
       if(!password)
@@ -84,20 +103,20 @@ export default class Signup extends Component {
       }
       else
       {
-          if(!/^([6-9]{1,})[0-9]{9,}$/.test(conf_pass)){
-            errorList['conf_passErr']="Wrong formate of mobile";
-            fromIsValid=false;
-          }
-          if(conf_pass.length<10)
-          {
-            errorList['conf_passErr']="mobile no could not be less than 10";
-            fromIsValid=false;
-          }
-          else if(conf_pass.length>10)
-          {
-            errorList['conf_passErr']="mobile no could not be more than 10";
-            fromIsValid=false;
-          }
+        if(!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{1,}$/.test(conf_pass)){
+          errorList['conf_passErr']="Wrong formate of password";
+          fromIsValid=false;
+        }
+        if(conf_pass.length<6)
+        {
+          errorList['conf_passErr']="Password length could not be less than 6";
+          fromIsValid=false;
+        }
+        else if(conf_pass.length>15)
+        {
+          errorList['conf_passErr']="Password length could not be more than 15";
+          fromIsValid=false;
+        }
       }
 
       this.setState({errorListG:errorList})
@@ -108,32 +127,76 @@ export default class Signup extends Component {
   onSubmit=(e)=>{
     e.preventDefault();
 
-    if(this.handleValidation())
+    const formData=new FormData();
+
+    formData.append('photo',this.state.photo);
+    formData.append('name',this.state.name);
+    formData.append('email',this.state.email);
+    formData.append('password',md5(this.state.password));
+
+    if(this.state.password===this.state.conf_pass)
     {
-      alert("Form summited without errors");
+      if(this.handleValidation())
+      {
+        axios
+          .post("http://localhost:5000/signup/",formData)
+            .then((res)=>{
+
+              swal({
+                title: "Success!",
+                text: "Data added successfully!",
+                icon: "success",
+              });
+
+            })
+            .catch((err)=>{
+              console.log(err);
+
+              swal({
+                title: "Error!",
+                text: "Something went wrong!",
+                icon: "error",
+              });
+
+            })
+
+      }
     }
     else
     {
-      alert("form submitted with errors");
+      swal({
+        title: "Error!",
+        text: "Password didn't matched",
+        icon: "error",
+      });
     }
 
   }
 
   render() {
-    const{nameErr,passErr,emailErr,conf_passErr}=this.state.errorListG;
+    const{nameErr,passErr,emailErr,conf_passErr,picErr}=this.state.errorListG;
+
     return (
       <>
         <Navbar title="Sign Up" />
         <div className="container">
+        
           <form className="myForm mt-3" onSubmit={this.onSubmit}>
             <div className="mb-3">
               <label className="form-label">Select Profile Photo</label>
               <input 
               type="file" 
               className="form-control" 
-              name="photo"  
+              name="photo" 
+              accept=".png,.jpg,.jpeg" 
               onChange={this.onFileChange} />
             </div>
+            {picErr?
+                <span className="text-danger mt-1">
+                  {picErr}
+                </span>
+              :""
+            }
             <div className="mb-3">
               <label className="form-label">Your Name</label>
               <input
@@ -185,9 +248,9 @@ export default class Signup extends Component {
             <div className="mb-3">
               <label className="form-label">Confirm Password</label>
               <input
-                type="tel"
+                type="password"
                 className="form-control"
-                placeholder="xxxxxxxxx"
+                placeholder="********"
                 name="conf_pass"
                 onChange={this.onChange}
               />
