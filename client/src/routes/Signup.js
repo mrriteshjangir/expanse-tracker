@@ -18,7 +18,11 @@ export default class Signup extends Component {
         conf_pass:"",
 
         // To handle my errors
-        errorListG:{}
+        errorListG:{},
+
+        // To verify email
+
+        emailVerify:''
     }
   }
 
@@ -69,9 +73,9 @@ export default class Signup extends Component {
       }
       else
       {
-          if(!/^(([<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+          if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
             errorList['emailErr']="Wrong formate of email";
-            fromIsValid=true;
+            fromIsValid=false;
           }
       }
       if(!password)
@@ -137,16 +141,39 @@ export default class Signup extends Component {
     if(this.state.password===this.state.conf_pass)
     {
       if(this.handleValidation())
-      {
+      { 
         axios
-          .post("http://localhost:5000/signup/",formData)
+          .get("http://localhost:5000/signup/verify/"+this.state.email)
+          .then((res)=>{
+            this.setState({
+              emailVerify:res.data.email,
+            });
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+
+        if(this.state.emailVerify!==this.state.email)
+        {
+          axios
+          .post("http://localhost:5000/signup/create",formData)
             .then((res)=>{
+
+              this.setState=({
+                name:"",
+                email:"",
+                password:"",
+                conf_pass:""
+              });
 
               swal({
                 title: "Success!",
                 text: "Data added successfully!",
                 icon: "success",
               });
+
+              // Redirect on other page
+              this.props.history.push("/signin");
 
             })
             .catch((err)=>{
@@ -159,6 +186,15 @@ export default class Signup extends Component {
               });
 
             })
+        }
+        else
+        {
+          swal({
+            title: "Error!",
+            text: "This email is already in use",
+            icon: "warning",
+          });
+        }
 
       }
     }

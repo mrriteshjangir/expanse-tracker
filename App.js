@@ -8,6 +8,7 @@ var cors=require('cors');
 //load out budget api file
 const budget=require('./routes/api/Budget');
 const expanse=require('./routes/api/Expanse')
+const signup=require('./routes/api/Signup')
 
 // create app
 const app=express();
@@ -24,6 +25,7 @@ app.use(express.json({extended:false}));
 // only for budget api
 app.use('/budget',budget);
 app.use('/expanse',expanse);
+app.use('/signup',signup);
 const port = 5000;
 
 app.listen(port,()=>console.log(`server is running ${port}`));
