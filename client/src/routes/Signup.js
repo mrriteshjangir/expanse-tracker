@@ -73,7 +73,7 @@ export default class Signup extends Component {
       }
       else
       {
-          if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+          if(!/^\w+([ -]?\w+)*@\w+([ -]?\w+)*( \w{2,3})+$/.test(email)){
             errorList['emailErr']="Wrong formate of email";
             fromIsValid=false;
           }
