@@ -59,7 +59,7 @@ router.post("/login", (req, res) => {
         res.status(404).json({ error: "User not found" });
       } else {
         if (password === user.password) {
-          res.status(200).json(user.email);
+          res.status(200).json(user.id);
         } else {
           res.status(400).json({ error: "Incorrect Password" });
         }

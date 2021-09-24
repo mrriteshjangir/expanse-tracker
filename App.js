@@ -5,10 +5,9 @@ const connectDB=require('./config/db');
 //middleware
 var cors=require('cors');
 
-//load out budget api file
-const budget=require('./routes/api/Budget');
-const expanse=require('./routes/api/Expanse')
-const signup=require('./routes/api/Signup')
+//load out Passbook api file
+const Transaction=require('./routes/api/Transaction');
+const Signup=require('./routes/api/Signup')
 
 // create app
 const app=express();
@@ -23,9 +22,8 @@ app.use(express.json({extended:false}));
 // app.get('/',(req,res)=> res.send('MERN Stack'));
 
 // only for budget api
-app.use('/budget',budget);
-app.use('/expanse',expanse);
-app.use('/signup',signup);
+app.use('/transaction',Transaction);
+app.use('/signup',Signup);
 const port = 5000;
 
 app.listen(port,()=>console.log(`server is running ${port}`));

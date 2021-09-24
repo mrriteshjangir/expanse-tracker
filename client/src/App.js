@@ -10,6 +10,7 @@ import Home from "./routes/Home";
 import Dashboard from "./routes/Dashboard";
 import Signin from "./routes/Signin";
 import Signup from "./routes/Signup";
+import AddTransaction from "./routes/AddTransaction";
 
 import useToken from "./components/useToken";
 
@@ -34,11 +35,16 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
+
           <Route path="/signup" component={Signup} />
 
-          {token ? <Redirect to="/dashboard" /> : <Signin />}
-
           <Route path="/dashboard" component={Dashboard} />
+
+          <Route path="/addTransaction" component={AddTransaction} />
+          
+          {/* Add All pages above this redirection */}
+          
+          {token ? <Redirect to="/dashboard" /> : <Signin />}
 
           <Redirect to="/" from="*" />
         </Switch>
