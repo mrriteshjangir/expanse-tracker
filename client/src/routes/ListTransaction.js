@@ -39,12 +39,10 @@ export default class ListTransaction extends Component {
           <tr key={index}>
             <th scope="row">{count++}</th>
             <td>{info.desc}</td>
-            <td>
             {info.type==="budget"?
-              <span className="badge bg-success">{info.amount}</span>:
-              <span className="badge bg-danger">{info.amount}</span>
+              <td className="text-success">{info.amount}</td>:
+              <td className="text-danger">{info.amount}</td>
             }
-            </td>
             <td>{info.type}</td>
             <td>{info.date}</td>
           </tr>
