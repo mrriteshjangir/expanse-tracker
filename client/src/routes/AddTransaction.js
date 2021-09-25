@@ -143,7 +143,7 @@ export default class AddTransaction extends Component {
             <div className="mb-3">
               <label className="form-label">Transaction Type</label>
               <select
-                class="form-select"
+                className="form-select"
                 name="type"
                 aria-label="Default select example"
                 onChange={this.onChange}

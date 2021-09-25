@@ -1,9 +1,59 @@
 import React, { Component } from "react";
+import axios from "axios";
+import swal from "sweetalert";
+
 export default class ListTransaction extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transactions: [],
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/transaction/getTransaction")
+      .then((res) => {
+        this.setState({
+          transactions: res.data,
+        });
+      })
+      .catch((er) => {
+        console.log(er);
+        swal({
+          title: "Error",
+          text: "Transaction not found",
+          icon: "error",
+        });
+      });
+  }
+
   render() {
+    let myList;
+    let count = 1;
+    if (!this.state.transactions) {
+      myList = "No Transaction Found";
+    } else {
+      myList = this.state.transactions.map((info, index) => {
+        return (
+          <tr key={index}>
+            <th scope="row">{count++}</th>
+            <td>{info.desc}</td>
+            <td>
+            {info.type==="budget"?
+              <span className="badge bg-success">{info.amount}</span>:
+              <span className="badge bg-danger">{info.amount}</span>
+            }
+            </td>
+            <td>{info.type}</td>
+            <td>{info.date}</td>
+          </tr>
+        );
+      });
+    }
     return (
       <>
-        <table class="table table-success table-striped table-hover">
+        <table className="table table-success table-striped table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -13,15 +63,7 @@ export default class ListTransaction extends Component {
               <th scope="col">Date</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
+          <tbody>{myList}</tbody>
         </table>
       </>
     );

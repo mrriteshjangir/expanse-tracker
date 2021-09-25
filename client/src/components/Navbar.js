@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useToken from "./useToken";
+import Logout from "./Logout";
 export default function Navbar({title}) {
+  const{token}=useToken();
   return (
     <>
     <title>{title} | Expanse Tracker App </title>
@@ -33,9 +36,20 @@ export default function Navbar({title}) {
             <Link className="btn btn-warning me-2" to="/signup">
               Signup
             </Link>
-            <Link className="btn btn-primary" to="/signin">
-              Signin
-            </Link>
+            {
+              !token || token.error ? 
+                <Link className="btn btn-primary" to="/signin">
+                  Signin
+                </Link>
+              :
+              <>
+                <Link className="btn btn-primary" to="/dashboard">
+                  Dashboard
+                </Link>
+                <Logout />
+              </>
+            }
+            
           </div>
         </div>
       </div>
