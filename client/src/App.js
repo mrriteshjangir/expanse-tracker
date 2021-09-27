@@ -11,6 +11,7 @@ import Dashboard from "./routes/Dashboard";
 import Signin from "./routes/Signin";
 import Signup from "./routes/Signup";
 import AddTransaction from "./routes/AddTransaction";
+import EditTransaction from "./routes/EditTransaction";
 
 import useToken from "./components/useToken";
 
@@ -41,6 +42,8 @@ export default function App() {
           <Route path="/dashboard" component={Dashboard} />
 
           <Route path="/addTransaction" component={AddTransaction} />
+
+          <Route path="/editTransaction" component={EditTransaction} />
           
           {/* Add All pages above this redirection */}
           

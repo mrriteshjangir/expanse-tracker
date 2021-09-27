@@ -59,7 +59,10 @@ router.post("/login", (req, res) => {
         res.status(404).json({ error: "User not found" });
       } else {
         if (password === user.password) {
-          res.status(200).json(user.id);
+
+          const sessUser={usrId:user.id,usrName:user.name,usrEmail:user.email,usrPhoto:user.photo,usrAccCreDate:user.created_date}
+
+          res.status(200).json(sessUser);
         } else {
           res.status(400).json({ error: "Incorrect Password" });
         }

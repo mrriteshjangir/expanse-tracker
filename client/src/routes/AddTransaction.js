@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import swal from "sweetalert";
 import Navbar from "../components/Navbar";
+
 export default class AddTransaction extends Component {
   constructor() {
     super();
@@ -10,11 +11,13 @@ export default class AddTransaction extends Component {
       amount: "",
       desc: "",
       type: "",
-
       // Error List Array
       errorListG: {},
     };
   }
+  
+  
+  
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -68,10 +71,15 @@ export default class AddTransaction extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
+    // This will get token value from localStrorage
+    const tokenString=localStorage.getItem('token');
+    const userToken=JSON.parse(tokenString);
+
     const packg = {
       amount: this.state.amount,
       desc: this.state.desc,
       type: this.state.type,
+      addedBy:userToken.usrEmail
     };
     if (this.handleErrors()) {
       axios

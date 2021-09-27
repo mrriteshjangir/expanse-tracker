@@ -14,8 +14,8 @@ router.post('/addTransaction',(req,res)=>{
 });
 
 //Get list of Transaction
-router.get('/getTransaction',(req,res)=>{
-    Transaction.find()
+router.get('/getTransaction/:email',(req,res)=>{
+    Transaction.find({addedBy:req.params.email})
         .then(Transaction=>res.status(200).json(Transaction))
         .catch(err=>res.status(400).json({error:"Unable to fetch Transaction due to "+err}));
 });
