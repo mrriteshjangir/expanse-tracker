@@ -33,14 +33,16 @@ export default function Navbar({title}) {
             </li>
           </ul>
           <div className="d-flex">
-            <Link className="btn btn-warning me-2" to="/signup">
-              Signup
-            </Link>
             {
               !token || token.error ? 
+              <>
                 <Link className="btn btn-primary" to="/signin">
                   Signin
                 </Link>
+                <Link className="btn btn-warning ms-2" to="/signup">
+                  Signup
+                </Link>
+              </>
               :
               <>
                 <Link className="btn btn-primary" to="/dashboard">

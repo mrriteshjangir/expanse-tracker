@@ -13,7 +13,7 @@ router.post('/addTransaction',(req,res)=>{
         .catch(err=>res.status(400).json({error:"Unable to add Transaction due to "+err}));
 });
 
-//Get list of Transaction
+//Get list of Transaction & Get alert about remaning value , budget value and expanse value
 router.get('/getTransaction/:email',(req,res)=>{
     Transaction.find({addedBy:req.params.email})
         .then(Transaction=>res.status(200).json(Transaction))
@@ -40,6 +40,5 @@ router.delete('/deleteTransaction/:id',(req,res)=>{
         .then(()=>res.status(200).json({msg:"Transaction deleted successfully"}))
         .catch(err=>res.status(400).json({error:"Unable to delete Transaction due to "+err}));
 });
-
 
 module.exports=router;
