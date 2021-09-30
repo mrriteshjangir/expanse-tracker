@@ -21,15 +21,15 @@ router.get('/getTransaction/:email',(req,res)=>{
 });
 
 // Get Eelement by id
-router.get('/getTransaction/:id',(req,res)=>{
-    Transaction.findById(req.params.id)
+router.get('/getTransactionAll/:ind',(req,res)=>{
+    Transaction.findById(req.params.ind)
         .then(Transaction=>res.status(200).json(Transaction))
         .catch(err=>res.status(400).json({error:"Unable to fetch Transaction due to "+err}));
 });
 
 // Update element usig id
-router.put('/updateTransaction/:id',(req,res)=>{
-    Transaction.findByIdAndUpdate(req.params.id,req.body)
+router.put('/updateTransaction/:ind',(req,res)=>{
+    Transaction.findByIdAndUpdate(req.params.ind,req.body)
         .then(()=>res.status(200).json({msg:"Transaction updated successfully"}))
         .catch(err=>res.status(400).json({error:"Unable to update Transaction due to "+err}));
 });

@@ -43,7 +43,7 @@ export default function App() {
 
           <Route path="/addTransaction" component={AddTransaction} />
 
-          <Route path="/editTransaction" component={EditTransaction} />
+          <Route path="/editTransaction/:ind" component={EditTransaction} />
           
           {/* Add All pages above this redirection */}
           
