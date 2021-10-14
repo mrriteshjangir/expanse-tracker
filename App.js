@@ -1,29 +1,49 @@
-const express=require('express');
+const express = require('express');
 
-const connectDB=require('./config/db');
+const connectDB = require('./config/db');
 
 //middleware
-var cors=require('cors');
+var cors = require('cors');
 
 //load out Passbook api file
-const Transaction=require('./routes/api/Transaction');
-const Signup=require('./routes/api/Signup')
+const Transaction = require('./routes/api/Transaction');
+const Signup = require('./routes/api/Signup')
 
 // create app
-const app=express();
+const app = express();
 
 //connet to database
 connectDB();
 
-app.use(cors({origin:true,credentials:true}));
+app.use(cors({ origin: true, credentials: true }));
 
-app.use(express.json({extended:false}));
+app.use(express.json({ extended: false }));
 
 // app.get('/',(req,res)=> res.send('MERN Stack'));
 
 // only for budget api
-app.use('/transaction',Transaction);
-app.use('/signup',Signup);
-const port = 5000;
+app.use('/transaction', Transaction);
+app.use('/signup', Signup);
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
-app.listen(port,()=>console.log(`server is running ${port}`));
+app.use((err, req, res, next) => {
+    console.log(err);
+    next();
+});
+
+const port = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    });
+
+}
+
+app.listen(port, () => console.log(`server is running ${port}`));

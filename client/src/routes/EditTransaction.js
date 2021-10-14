@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 import swal from "sweetalert";
+
 export default class EditTransaction extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +12,9 @@ export default class EditTransaction extends Component {
       desc: "",
       type: "",
       // Error List Array
-      errorListG: {},
+      errorListG: {}
     };
+    
   }
 
   onChange = (e) => {
@@ -65,7 +67,7 @@ export default class EditTransaction extends Component {
   componentDidMount() {
     axios
       .get(
-        "http://localhost:5000/transaction/getTransactionAll/" +
+        "/transaction/getTransactionAll/" +
           this.props.match.params.ind
       )
       .then((res) => {
@@ -95,7 +97,7 @@ export default class EditTransaction extends Component {
 
     if (this.handleErrors()) {
       axios
-        .put("http://localhost:5000/transaction/updateTransaction/"+this.props.match.params.ind,packg)
+        .put("/transaction/updateTransaction/"+this.props.match.params.ind,packg)
         .then((res) => {
           swal({
             title: "Success",

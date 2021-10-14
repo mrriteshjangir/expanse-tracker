@@ -17,7 +17,7 @@ export default class TransactionHeaders extends Component {
 
     axios
       .get(
-        "http://localhost:5000/transaction/getTransaction/" + userToken.usrEmail
+        "/transaction/getTransaction/" + userToken.usrEmail
       )
       .then((res) => {
         this.setState({

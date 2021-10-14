@@ -8,7 +8,7 @@ import swal from "sweetalert";
 import md5 from 'md5';
 
 async function loginUser(credentials) {
-  return fetch("http://localhost:5000/signup/login", {
+  return fetch("/signup/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

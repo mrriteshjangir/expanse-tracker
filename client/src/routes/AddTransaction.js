@@ -83,7 +83,7 @@ export default class AddTransaction extends Component {
     };
     if (this.handleErrors()) {
       axios
-        .post("http://localhost:5000/transaction/addTransaction", packg)
+        .post("/transaction/addTransaction", packg)
         .then((res) => {
           this.setState({
             amount: "",

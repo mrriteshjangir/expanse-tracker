@@ -73,10 +73,10 @@ export default class Signup extends Component {
       }
       else
       {
-          if(!/^\w+([ -]?\w+)*@\w+([ -]?\w+)*( \w{2,3})+$/.test(email)){
-            errorList['emailErr']="Wrong formate of email";
-            fromIsValid=false;
-          }
+          // if(!/^\w+([ -]?\w+)*@\w+([ -]?\w+)*( \w{2,3})+$/.test(email)){
+          //   errorList['emailErr']="Wrong formate of email";
+          //   fromIsValid=false;
+          // }
       }
       if(!password)
       {
@@ -143,7 +143,7 @@ export default class Signup extends Component {
       if(this.handleValidation())
       { 
         axios
-          .get("http://localhost:5000/signup/verify/"+this.state.email)
+          .post("/signup/verify",this.state.email)
           .then((res)=>{
             this.setState({
               emailVerify:res.data.email,
@@ -156,7 +156,7 @@ export default class Signup extends Component {
         if(this.state.emailVerify!==this.state.email)
         {
           axios
-          .post("http://localhost:5000/signup/create",formData)
+          .post("/signup/create",formData)
             .then((res)=>{
 
               this.setState=({

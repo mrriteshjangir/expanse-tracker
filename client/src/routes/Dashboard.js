@@ -12,8 +12,7 @@ import TransactionHeaders from "../components/TransactionHeaders";
 
 export default function Dashboard() {
   const { token } = useToken();
-
-  let myDate = token.usrAccCreDate;
+  let myDate= new Date(token.usrAccCreDate);
   return (
     <>
       <Navbar title="Dashboard" />
@@ -37,7 +36,7 @@ export default function Dashboard() {
                 <h5 class="card-title text-danger">{token.usrName}</h5>
                 <p class="card-text">{token.usrEmail}</p>
                 <p class="card-text">
-                  <small class="text-muted">{myDate}</small>
+                  <small class="text-muted">{`${myDate.getDate()}-${myDate.getMonth() + 1}-${myDate.getFullYear()}  ${myDate.getHours()}:${myDate.getMinutes()<9?'0'+myDate.getMinutes():myDate.getMinutes()} ${myDate.getHours()>= 12 ? 'PM' : 'AM'}`}</small>
                 </p>
               </div>
             </div>

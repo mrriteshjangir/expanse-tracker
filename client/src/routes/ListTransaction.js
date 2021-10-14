@@ -9,6 +9,7 @@ export default class ListTransaction extends Component {
     super(props);
     this.state = {
       transactions: [],
+      dateDMY: '',
     };
   }
 
@@ -18,7 +19,7 @@ export default class ListTransaction extends Component {
     const userToken=JSON.parse(tokenString);
 
     axios
-      .get("http://localhost:5000/transaction/getTransaction/"+userToken.usrEmail)
+      .get("/transaction/getTransaction/"+userToken.usrEmail)
       .then((res) => {
         this.setState({
           transactions: res.data,
@@ -44,7 +45,7 @@ export default class ListTransaction extends Component {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete("http://localhost:5000/transaction/deleteTransaction/" + id)
+          .delete("/transaction/deleteTransaction/" + id)
           .then((res) => {
             swal({
               title: "Success",
@@ -73,6 +74,7 @@ export default class ListTransaction extends Component {
       myList = "No Transaction Found";
     } else {
       myList = this.state.transactions.map((info, index) => {
+        let date= new Date(info.date);
         return (
           <tr key={index}>
             <th scope="row">{count++}</th>
@@ -83,7 +85,8 @@ export default class ListTransaction extends Component {
               <td className="text-danger">{info.amount}</td>
             )}
             <td>{info.type}</td>
-            <td>{info.date}</td>
+            
+            <td>{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()<9?'0'+date.getMinutes():date.getMinutes()} ${date.getHours()>= 12 ? 'PM' : 'AM'}`}</td>
             <td>
               <div
                 className="btn-group"
