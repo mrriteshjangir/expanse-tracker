@@ -15,6 +15,9 @@ const app = express();
 //connet to database
 connectDB();
 
+//since mongoose promise is depreciated, we overide it with node's promise
+mongoose.Promise = global.Promise;
+
 app.use(cors({ origin: true, credentials: true }));
 
 app.use(express.json({ extended: false }));
@@ -24,6 +27,7 @@ app.use(express.json({ extended: false }));
 // only for budget api
 app.use('/transaction', Transaction);
 app.use('/signup', Signup);
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
