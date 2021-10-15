@@ -25,7 +25,7 @@ export default function Dashboard() {
           <div class="row g-0">
             <div class="col-md-2">
               <img
-                src={`../../images/${token.usrPhoto}`}
+                src={`../images/${token.usrPhoto}`}
                 class="img-fluid rounded-start"
                 style={{ height: "150px" }}
                 alt={`Profile of ${token.usrName}`}
