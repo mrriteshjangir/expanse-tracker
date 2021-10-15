@@ -1,7 +1,7 @@
 const express = require('express');
 
 const connectDB = require('./config/db');
-
+const path = require('path');
 require('dotenv').config();
 
 //middleware
@@ -49,7 +49,6 @@ if (process.env.NODE_ENV === 'production') {
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
     });
-
 }
 
 app.listen(port, () => console.log(`server is running ${port}`));
