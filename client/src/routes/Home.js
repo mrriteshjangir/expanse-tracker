@@ -7,6 +7,7 @@ import Banner3 from '../assets/images/banner-3.jpg';
 import Banner4 from '../assets/images/banner-4.jpg';
 import Banner5 from '../assets/images/banner-5.jpg';
 
+import Slide from './Slide';
 export default function Home() {
     return (
         <>
@@ -38,7 +39,7 @@ export default function Home() {
 
 
             <div className="container">
-                
+
             </div>
         </>
     )
