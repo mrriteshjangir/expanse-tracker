@@ -1,6 +1,7 @@
 const express = require('express');
 
 const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
 
@@ -20,8 +21,10 @@ connectDB();
 //since mongoose promise is depreciated, we overide it with node's promise
 mongoose.Promise = global.Promise;
 
+// cors
 app.use(cors({ origin: true, credentials: true }));
 
+// Init Middleware
 app.use(express.json({ extended: false }));
 
 // app.get('/',(req,res)=> res.send('MERN Stack'));
