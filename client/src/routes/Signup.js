@@ -143,7 +143,7 @@ export default class Signup extends Component {
       if(this.handleValidation())
       { 
         axios
-          .post("/signup/verify",this.state.email)
+          .get("/signup/verify"+this.state.email)
           .then((res)=>{
             this.setState({
               emailVerify:res.data.email,
