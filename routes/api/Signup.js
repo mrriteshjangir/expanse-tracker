@@ -46,8 +46,9 @@ router.route("/create").post(upload.single("photo"), (req, res) => {
 // Verify user
 
 router.post("/verify", (req, res) => {
-  Signup.findOne(req.body.email)
-    .then((data) => res.json(data))
+  const {email} = req.body;
+  Signup.findOne({ email })
+    .then((res) => res.json(res))
     .catch((err) => res.status(404).json({ err: "Data not found" }));
 });
 
